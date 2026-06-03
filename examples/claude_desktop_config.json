@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "socialdatax-kuaishou": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.52choujiang.com/kuaishou/mcp",
+        "--header",
+        "Authorization: Bearer <SOCIALDATAX_API_KEY>"
+      ]
+    }
+  }
+}

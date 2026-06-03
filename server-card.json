@@ -1,0 +1,83 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.52choujiang/kuaishou-insights",
+  "title": "SocialDataX 快手 Kuaishou MCP",
+  "description": "快手/Kuaishou hot list, work search/details, comments/replies, creator profiles, works.",
+  "version": "0.1.0",
+  "website": "https://socialdatax.com",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.52choujiang.com/kuaishou/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer API key from SocialDataX / 社媒数据助手",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "name": "kuaishou_get_hot_search_list",
+      "description": "Get the current Kuaishou / 快手 short-video hot list."
+    },
+    {
+      "name": "kuaishou_search_videos",
+      "description": "Search Kuaishou works by natural-language keyword with optional paging."
+    },
+    {
+      "name": "kuaishou_get_video_detail_by_photo_id",
+      "description": "Fetch structured work details when the caller already has a photo_id."
+    },
+    {
+      "name": "kuaishou_get_video_detail_by_url",
+      "description": "Resolve a Kuaishou work page link, short link, or share text into structured work details."
+    },
+    {
+      "name": "kuaishou_get_video_comments_by_photo_id",
+      "description": "Fetch paginated first-level comments when the caller already has a photo_id."
+    },
+    {
+      "name": "kuaishou_get_video_comments_by_url",
+      "description": "Fetch paginated first-level comments directly from a Kuaishou work page link, short link, or share text."
+    },
+    {
+      "name": "kuaishou_get_video_comment_replies_by_comment_id",
+      "description": "Fetch paginated replies under a first-level comment by photo_id and comment_id."
+    },
+    {
+      "name": "kuaishou_get_user_info_by_user_id",
+      "description": "Fetch creator profile data when the caller already has a user_id."
+    },
+    {
+      "name": "kuaishou_get_user_info_by_profile_url",
+      "description": "Resolve a Kuaishou profile link, short link, or share text into creator profile data."
+    },
+    {
+      "name": "kuaishou_get_user_posted_videos_by_user_id",
+      "description": "Fetch a paginated list of works published by a creator when the caller already has a user_id."
+    },
+    {
+      "name": "kuaishou_get_user_posted_videos_by_profile_url",
+      "description": "Fetch a paginated list of works published by a creator from a profile link, short link, or share text."
+    }
+  ],
+  "tags": [
+    "kuaishou",
+    "kuaishou-mcp",
+    "kuaishou-data",
+    "kwai",
+    "kwai-mcp",
+    "short-video",
+    "mcp",
+    "mcp-server",
+    "socialdatax",
+    "social-insights",
+    "marketing-research",
+    "comment-analysis",
+    "creator-analytics"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "socialdatax-kuaishou": {
+      "type": "streamable_http",
+      "url": "https://mcp.52choujiang.com/kuaishou/mcp",
+      "headers": {
+        "Authorization": "Bearer <SOCIALDATAX_API_KEY>"
+      }
+    }
+  }
+}
