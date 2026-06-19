@@ -11,7 +11,7 @@ Use this checklist before syncing this listing to the public Kuaishou MCP reposi
 - Suggested repository topics: `mcp`, `mcp-server`, `kuaishou`, `kuaishou-mcp`, `kuaishou-data`, `kwai`, `kwai-mcp`, `short-video`, `socialdatax`, `social-insights`, `marketing-research`, `comment-analysis`, `creator-analytics`
 - Root README title: `快手 MCP | Kuaishou MCP | Kwai MCP`
 - Product: `SocialDataX` / `社媒数据助手`
-- Website: `https://socialdatax.com`
+- Website: `https://socialdatax.52choujiang.com`
 - Registry name: `com.52choujiang/kuaishou-insights`
 - Future registry name: `com.socialdatax/kuaishou-insights`
 - Hosted MCP endpoint: `https://mcp.52choujiang.com/kuaishou/mcp`

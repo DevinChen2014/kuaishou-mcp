@@ -8,7 +8,7 @@ If you are looking for a 快手 MCP, Kuaishou MCP, or Kwai MCP for social media 
 - the hosted `streamable-http` endpoint for clients that support remote MCP
 - an `mcp-remote` fallback example for command/stdio-only MCP clients
 
-The business implementation is privately hosted. This repository exposes only the public connection surface for read-only social media intelligence workflows.
+The business implementation is privately hosted. This repository exposes only the public connection surface for social media content intelligence workflows.
 
 ## Search Aliases
 
@@ -35,7 +35,7 @@ Common search phrases for this MCP service:
 - Hosted transport: `streamable-http`
 - Authentication: `Authorization: Bearer <SOCIALDATAX_API_KEY>`
 - Product: `SocialDataX` / `社媒数据助手`
-- Website: <https://socialdatax.com>
+- Website: <https://socialdatax.52choujiang.com>
 - Registry name: `com.52choujiang/kuaishou-insights`
 - Future registry name: `com.socialdatax/kuaishou-insights`
 - Current public capability version: `0.1.0`
@@ -44,9 +44,9 @@ Common search phrases for this MCP service:
 
 Use the hosted `streamable-http` endpoint directly from clients that support authenticated remote MCP. For clients that only support command/stdio MCP servers, use `mcp-remote` as a local compatibility proxy.
 
-## Read-Only Scope
+## Workflow Scope
 
-This MCP service is designed for read-only social media intelligence workflows. It does not provide account login, posting, editing, liking, commenting, or other account actions.
+This MCP service is designed for social media content intelligence workflows. It does not provide account login, posting, editing, liking, commenting, or other account actions.
 
 Supported workflows include:
 
@@ -58,6 +58,7 @@ Supported workflows include:
 - Fetch paginated replies under a first-level comment.
 - Read creator profile data from a profile link, short link, share text, or `user_id`.
 - Fetch creator work lists from a profile link, short link, share text, or `user_id`.
+- Submit a work video speech-to-text transcript task; submit tools 提交完成后最多短等 15 秒, and unfinished jobs can be polled by `job_id`.
 
 ## Tools
 
@@ -74,6 +75,9 @@ Supported workflows include:
 | `kuaishou_get_user_info_by_profile_url` | Resolve a Kuaishou profile link, short link, or share text into creator profile data. |
 | `kuaishou_get_user_posted_videos_by_user_id` | Fetch a paginated list of works published by a creator when the caller already has a `user_id`. |
 | `kuaishou_get_user_posted_videos_by_profile_url` | Fetch a paginated list of works published by a creator from a profile link, short link, or share text. |
+| `kuaishou_submit_video_speech_text_by_video_url` | Submit a work video speech-to-text transcript task from a work page link, short link, or share text. 提交完成后最多短等 15 秒. |
+| `kuaishou_submit_video_speech_text_by_photo_id` | Submit a work video speech-to-text transcript task from a `photo_id`. 提交完成后最多短等 15 秒. |
+| `kuaishou_get_video_speech_text_job` | Check a work video speech-to-text transcript job by `job_id` without creating a new task. This v1 surface returns transcript only, not summary. |
 
 ## Quick Start
 
@@ -117,8 +121,10 @@ For command/stdio-only MCP clients, use `mcp-remote`:
 Claude Code can use remote HTTP directly:
 
 ```bash
-claude mcp add --transport http --header "Authorization: Bearer <SOCIALDATAX_API_KEY>" socialdatax-kuaishou https://mcp.52choujiang.com/kuaishou/mcp
+claude mcp add --transport http socialdatax-kuaishou https://mcp.52choujiang.com/kuaishou/mcp --header 'Authorization: Bearer ${SOCIALDATAX_API_KEY}'
 ```
+
+Persist `SOCIALDATAX_API_KEY` in the runtime environment or client Secret before restarting Claude Code.
 
 Claude Desktop should use its remote MCP / Connectors UI when available. If a local configuration file in your version only supports command/stdio servers, use the `mcp-remote` fallback.
 
@@ -136,7 +142,7 @@ Configuration examples are available in [examples](examples/):
 
 Request or manage API access from the product website:
 
-<https://socialdatax.com>
+<https://socialdatax.52choujiang.com>
 
 Use the key as a Bearer token in the `Authorization` request header. Do not commit real API keys to code, docs, issues, or screenshots.
 

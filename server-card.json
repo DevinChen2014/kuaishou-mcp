@@ -2,9 +2,9 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.52choujiang/kuaishou-insights",
   "title": "SocialDataX 快手 Kuaishou MCP",
-  "description": "快手/Kuaishou hot list, work search/details, comments/replies, creator profiles, works.",
+  "description": "快手/Kuaishou hot list, work search/details, comments/replies, creator profiles, works, and speech-to-text transcript.",
   "version": "0.1.0",
-  "website": "https://socialdatax.com",
+  "website": "https://socialdatax.52choujiang.com",
   "remotes": [
     {
       "type": "streamable-http",
@@ -35,6 +35,18 @@
     {
       "name": "kuaishou_get_video_detail_by_url",
       "description": "Resolve a Kuaishou work page link, short link, or share text into structured work details."
+    },
+    {
+      "name": "kuaishou_submit_video_speech_text_by_video_url",
+      "description": "Submit a Kuaishou work video speech-to-text transcript task from a work page link, short link, or share text. 提交完成后最多短等 15 秒；if not finished, returns a job handle."
+    },
+    {
+      "name": "kuaishou_submit_video_speech_text_by_photo_id",
+      "description": "Submit a Kuaishou work video speech-to-text transcript task from a photo_id. 提交完成后最多短等 15 秒；if not finished, returns a job handle."
+    },
+    {
+      "name": "kuaishou_get_video_speech_text_job",
+      "description": "Check a Kuaishou video speech-to-text transcript job by job_id without starting a new task. This v1 surface returns transcript only, not summary."
     },
     {
       "name": "kuaishou_get_video_comments_by_photo_id",
