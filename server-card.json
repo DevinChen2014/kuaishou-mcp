@@ -3,8 +3,8 @@
   "name": "com.52choujiang/kuaishou-insights",
   "title": "SocialDataX 快手 Kuaishou MCP",
   "description": "快手/Kuaishou hot list, work search/details, comments/replies, creator profiles, works, and speech-to-text transcript.",
-  "version": "0.1.0",
-  "website": "https://socialdatax.52choujiang.com",
+  "version": "0.1.1",
+  "website": "https://socialdatax.com",
   "remotes": [
     {
       "type": "streamable-http",

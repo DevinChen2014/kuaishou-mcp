@@ -11,7 +11,7 @@ Use this checklist before syncing this listing to the public Kuaishou MCP reposi
 - Suggested repository topics: `mcp`, `mcp-server`, `kuaishou`, `kuaishou-mcp`, `kuaishou-data`, `kwai`, `kwai-mcp`, `short-video`, `socialdatax`, `social-insights`, `marketing-research`, `comment-analysis`, `creator-analytics`
 - Root README title: `快手 MCP | Kuaishou MCP | Kwai MCP`
 - Product: `SocialDataX` / `社媒数据助手`
-- Website: `https://socialdatax.52choujiang.com`
+- Website: `https://socialdatax.com`
 - Registry name: `com.52choujiang/kuaishou-insights`
 - Future registry name: `com.socialdatax/kuaishou-insights`
 - Hosted MCP endpoint: `https://mcp.52choujiang.com/kuaishou/mcp`
@@ -48,8 +48,9 @@ Use this checklist before syncing this listing to the public Kuaishou MCP reposi
 
 - Hosted streamable HTTP clients can connect directly to `https://mcp.52choujiang.com/kuaishou/mcp` with `Authorization: Bearer <SOCIALDATAX_API_KEY>`.
 - With a valid key, hosted MCP `initialize` succeeds.
-- With a valid key, hosted MCP `tools/list` returns the current 11 public tools.
+- With a valid key, hosted MCP `tools/list` returns the current 14 public tools.
 - `kuaishou_get_hot_search_list` is present in `tools/list`; if it is missing, deploy the latest service before publishing.
+- `kuaishou_submit_video_speech_text_by_video_url`, `kuaishou_submit_video_speech_text_by_photo_id`, and `kuaishou_get_video_speech_text_job` are present in `tools/list`; if any are missing, deploy the latest service before publishing.
 - `examples/codex_config.toml` uses remote HTTP URL and `bearer_token_env_var`, not `mcp-remote`.
 - `examples/cursor_mcp.json` uses remote HTTP URL and `headers` with `${env:SOCIALDATAX_API_KEY}`, not `mcp-remote`.
 - `mcp.json` is explicitly command/stdio fallback and uses `mcp-remote`.
