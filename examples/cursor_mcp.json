@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "socialdatax-kuaishou": {
-      "url": "https://mcp.52choujiang.com/kuaishou/mcp",
+      "url": "https://mcp.socialdatax.com/kuaishou/mcp",
       "headers": {
         "Authorization": "Bearer ${env:SOCIALDATAX_API_KEY}"
       }

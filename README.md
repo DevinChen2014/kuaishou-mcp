@@ -15,14 +15,14 @@ The business implementation is privately hosted. This repository exposes only th
 Common search phrases for this MCP service:
 
 - `快手 MCP`
-- `快手 数据 MCP`
 - `快手 热榜 MCP`
+- `快手 数据 MCP`
 - `快手 作品 MCP`
 - `快手 评论 MCP`
 - `快手 达人 MCP`
 - `Kuaishou MCP`
+- `Kuaishou hot search MCP`
 - `Kuaishou data MCP`
-- `Kuaishou hot list MCP`
 - `Kuaishou work research MCP`
 - `Kuaishou comments MCP`
 - `Kuaishou creator MCP`
@@ -31,14 +31,14 @@ Common search phrases for this MCP service:
 
 ## Service
 
-- Hosted MCP endpoint: `https://mcp.52choujiang.com/kuaishou/mcp`
+- Hosted MCP endpoint: `https://mcp.socialdatax.com/kuaishou/mcp`
 - Hosted transport: `streamable-http`
 - Authentication: `Authorization: Bearer <SOCIALDATAX_API_KEY>`
 - Product: `SocialDataX` / `社媒数据助手`
 - Website: <https://socialdatax.com>
 - Registry name: `com.52choujiang/kuaishou-insights`
 - Future registry name: `com.socialdatax/kuaishou-insights`
-- Current public capability version: `0.1.1`
+- Current public capability version: `0.1.2`
 
 ## Platform MCP
 
@@ -50,34 +50,36 @@ This MCP service is designed for social media content intelligence workflows. It
 
 Supported workflows include:
 
-- Read the Kuaishou / 快手 short-video hot list.
-- Search Kuaishou works by natural-language keyword with pagination.
+- Read the current Kuaishou / 快手 short-video hot search list.
+- Search Kuaishou works by natural-language keyword with optional `page_token` continuation; do not pass `page`.
+- Search Kuaishou users by natural-language keyword with optional `page_token` continuation before creator profile or work-list lookup; do not pass `page`.
 - Resolve a Kuaishou work page link, short link, or share text into structured work details.
 - Read work details when the caller already has a `photo_id`.
 - Fetch paginated first-level comments for comment analysis.
 - Fetch paginated replies under a first-level comment.
-- Read creator profile data from a profile link, short link, share text, or `user_id`.
-- Fetch creator work lists from a profile link, short link, share text, or `user_id`.
-- Submit a work video speech-to-text transcript task; submit tools 提交完成后最多短等 15 秒, and unfinished jobs can be polled by `job_id`.
+- Read creator profile data from a non-empty `user_id`, profile link, short link, or share text. Live/fw-user profile shares are supported for profile data; successful results return a reusable non-empty `user_id`.
+- Fetch creator work lists from a non-empty `user_id`, or from a profile link, short link, or share text that resolves directly to a non-empty `user_id`. For live/fw-user profile shares, call creator profile first and use the returned non-empty `user_id`.
+- Submit a work video speech-to-text transcript task; submit tools 提交完成后最多短等 240 秒, and unfinished jobs should continue polling the same `job_id` until terminal.
 
 ## Tools
 
 | Tool | Public purpose |
 | --- | --- |
-| `kuaishou_get_hot_search_list` | Get the current Kuaishou / 快手 short-video hot list. |
-| `kuaishou_search_videos` | Search Kuaishou works by natural-language keyword with optional paging. |
+| `kuaishou_get_hot_search_list` | Fetch the current Kuaishou / 快手 short-video hot search list. |
+| `kuaishou_search_videos` | Search Kuaishou works by natural-language keyword with optional `page_token` continuation; do not pass `page`. |
+| `kuaishou_search_users` | Search Kuaishou users by natural-language keyword with optional `page_token` continuation; do not pass `page`. |
 | `kuaishou_get_video_detail_by_photo_id` | Fetch structured work details when the caller already has a `photo_id`. |
 | `kuaishou_get_video_detail_by_url` | Resolve a Kuaishou work page link, short link, or share text into structured work details. |
 | `kuaishou_get_video_comments_by_photo_id` | Fetch paginated first-level comments when the caller already has a `photo_id`. |
 | `kuaishou_get_video_comments_by_url` | Fetch paginated first-level comments directly from a Kuaishou work page link, short link, or share text. |
 | `kuaishou_get_video_comment_replies_by_comment_id` | Fetch paginated replies under a first-level comment by `photo_id` and `comment_id`. |
-| `kuaishou_get_user_info_by_user_id` | Fetch creator profile data when the caller already has a `user_id`. |
-| `kuaishou_get_user_info_by_profile_url` | Resolve a Kuaishou profile link, short link, or share text into creator profile data. |
-| `kuaishou_get_user_posted_videos_by_user_id` | Fetch a paginated list of works published by a creator when the caller already has a `user_id`. |
-| `kuaishou_get_user_posted_videos_by_profile_url` | Fetch a paginated list of works published by a creator from a profile link, short link, or share text. |
-| `kuaishou_submit_video_speech_text_by_video_url` | Submit a work video speech-to-text transcript task from a work page link, short link, or share text. 提交完成后最多短等 15 秒. |
-| `kuaishou_submit_video_speech_text_by_photo_id` | Submit a work video speech-to-text transcript task from a `photo_id`. 提交完成后最多短等 15 秒. |
-| `kuaishou_get_video_speech_text_job` | Check a work video speech-to-text transcript job by `job_id` without creating a new task. This v1 surface returns transcript only, not summary. |
+| `kuaishou_get_user_info_by_user_id` | Fetch creator profile data when the caller already has a non-empty `user_id`. |
+| `kuaishou_get_user_info_by_profile_url` | Resolve a Kuaishou profile link, including live/fw-user profile shares, short link, or share text into creator profile data; successful results return a reusable non-empty `user_id`. |
+| `kuaishou_get_user_posted_videos_by_user_id` | Fetch a paginated list of works published by a creator when the caller already has a non-empty `user_id`. |
+| `kuaishou_get_user_posted_videos_by_profile_url` | Fetch a paginated list of works published by a creator from a profile link, short link, or share text that resolves directly to a non-empty `user_id`; for live/fw-user profile shares, call creator profile first and use the returned non-empty `user_id`. |
+| `kuaishou_submit_video_speech_text_by_video_url` | Submit a work video speech-to-text transcript task from a work page link, short link, or share text. 提交完成后最多短等 240 秒；未完成时继续查询同一个 `job_id` 直到终态. |
+| `kuaishou_submit_video_speech_text_by_photo_id` | Submit a work video speech-to-text transcript task from a `photo_id`. 提交完成后最多短等 240 秒；未完成时继续查询同一个 `job_id` 直到终态. |
+| `kuaishou_get_video_speech_text_job` | Check a work video speech-to-text transcript job by `job_id` without creating a new task; each call waits up to 240 seconds. If unfinished, continue querying the same `job_id` until terminal. This v1 surface returns transcript plus content context, not summary. |
 
 ## Quick Start
 
@@ -88,7 +90,7 @@ For clients that support authenticated `streamable-http`, use the hosted endpoin
   "mcpServers": {
     "socialdatax-kuaishou": {
       "type": "streamable_http",
-      "url": "https://mcp.52choujiang.com/kuaishou/mcp",
+      "url": "https://mcp.socialdatax.com/kuaishou/mcp",
       "headers": {
         "Authorization": "Bearer <SOCIALDATAX_API_KEY>"
       }
@@ -109,7 +111,7 @@ For command/stdio-only MCP clients, use `mcp-remote`:
       "args": [
         "-y",
         "mcp-remote",
-        "https://mcp.52choujiang.com/kuaishou/mcp",
+        "https://mcp.socialdatax.com/kuaishou/mcp",
         "--header",
         "Authorization: Bearer <SOCIALDATAX_API_KEY>"
       ]
@@ -121,7 +123,7 @@ For command/stdio-only MCP clients, use `mcp-remote`:
 Claude Code can use remote HTTP directly:
 
 ```bash
-claude mcp add --transport http socialdatax-kuaishou https://mcp.52choujiang.com/kuaishou/mcp --header 'Authorization: Bearer ${SOCIALDATAX_API_KEY}'
+claude mcp add --transport http socialdatax-kuaishou https://mcp.socialdatax.com/kuaishou/mcp --header 'Authorization: Bearer ${SOCIALDATAX_API_KEY}'
 ```
 
 Persist `SOCIALDATAX_API_KEY` in the runtime environment or client Secret before restarting Claude Code.
@@ -144,7 +146,7 @@ Request or manage API access from the product website:
 
 <https://socialdatax.com>
 
-Use the key as a Bearer token in the `Authorization` request header. Do not commit real API keys to code, docs, issues, or screenshots.
+Use the key as a Bearer token in the `Authorization` request header. Do not commit real API Key values to code, docs, issues, or screenshots.
 
 ## Directory Metadata
 

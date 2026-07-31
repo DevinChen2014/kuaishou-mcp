@@ -2,17 +2,17 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.52choujiang/kuaishou-insights",
   "title": "SocialDataX 快手 Kuaishou MCP",
-  "description": "快手/Kuaishou hot list, work search/details, comments/replies, creator profiles, works, and speech-to-text transcript.",
-  "version": "0.1.1",
+  "description": "快手/Kuaishou hot search, work/user search, work details, comments/replies, creator profiles, works, and speech-to-text transcript.",
+  "version": "0.1.2",
   "website": "https://socialdatax.com",
   "remotes": [
     {
       "type": "streamable-http",
-      "url": "https://mcp.52choujiang.com/kuaishou/mcp",
+      "url": "https://mcp.socialdatax.com/kuaishou/mcp",
       "headers": [
         {
           "name": "Authorization",
-          "description": "Bearer API key from SocialDataX / 社媒数据助手",
+          "description": "Bearer API Key from SocialDataX / 社媒数据助手",
           "isRequired": true,
           "isSecret": true
         }
@@ -22,11 +22,15 @@
   "tools": [
     {
       "name": "kuaishou_get_hot_search_list",
-      "description": "Get the current Kuaishou / 快手 short-video hot list."
+      "description": "Fetch the current Kuaishou / 快手 short-video hot search list."
     },
     {
       "name": "kuaishou_search_videos",
-      "description": "Search Kuaishou works by natural-language keyword with optional paging."
+      "description": "Search Kuaishou works by natural-language keyword with optional page_token continuation; do not pass page."
+    },
+    {
+      "name": "kuaishou_search_users",
+      "description": "Search Kuaishou users by natural-language keyword with optional page_token continuation; do not pass page."
     },
     {
       "name": "kuaishou_get_video_detail_by_photo_id",
@@ -38,15 +42,15 @@
     },
     {
       "name": "kuaishou_submit_video_speech_text_by_video_url",
-      "description": "Submit a Kuaishou work video speech-to-text transcript task from a work page link, short link, or share text. 提交完成后最多短等 15 秒；if not finished, returns a job handle."
+      "description": "Submit a Kuaishou work video speech-to-text transcript task from a work page link, short link, or share text. 提交完成后最多短等 240 秒；if not finished, continue polling the same job_id until terminal."
     },
     {
       "name": "kuaishou_submit_video_speech_text_by_photo_id",
-      "description": "Submit a Kuaishou work video speech-to-text transcript task from a photo_id. 提交完成后最多短等 15 秒；if not finished, returns a job handle."
+      "description": "Submit a Kuaishou work video speech-to-text transcript task from a photo_id. 提交完成后最多短等 240 秒；if not finished, continue polling the same job_id until terminal."
     },
     {
       "name": "kuaishou_get_video_speech_text_job",
-      "description": "Check a Kuaishou video speech-to-text transcript job by job_id without starting a new task. This v1 surface returns transcript only, not summary."
+      "description": "Check a Kuaishou video speech-to-text transcript job by job_id without starting a new task. Each call waits up to 240 seconds for the same job. If unfinished, continue querying the same job_id until is_terminal is true. This v1 surface returns transcript plus content context, not summary."
     },
     {
       "name": "kuaishou_get_video_comments_by_photo_id",
@@ -62,19 +66,19 @@
     },
     {
       "name": "kuaishou_get_user_info_by_user_id",
-      "description": "Fetch creator profile data when the caller already has a user_id."
+      "description": "Fetch creator profile data when the caller already has a non-empty user_id."
     },
     {
       "name": "kuaishou_get_user_info_by_profile_url",
-      "description": "Resolve a Kuaishou profile link, short link, or share text into creator profile data."
+      "description": "Resolve a Kuaishou profile link, including live/fw-user profile shares, short link, or share text into creator profile data; successful results return a reusable non-empty user_id."
     },
     {
       "name": "kuaishou_get_user_posted_videos_by_user_id",
-      "description": "Fetch a paginated list of works published by a creator when the caller already has a user_id."
+      "description": "Fetch a paginated list of works published by a creator when the caller already has a non-empty user_id."
     },
     {
       "name": "kuaishou_get_user_posted_videos_by_profile_url",
-      "description": "Fetch a paginated list of works published by a creator from a profile link, short link, or share text."
+      "description": "Fetch a paginated list of works published by a creator from a profile link, short link, or share text that resolves directly to a non-empty user_id; for live/fw-user profile shares, call creator profile first and use the returned non-empty user_id."
     }
   ],
   "tags": [
