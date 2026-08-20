@@ -50,9 +50,10 @@ This MCP service is designed for social media content intelligence workflows. It
 
 Supported workflows include:
 
+- Query the current API Key account's SocialDataX points balance.
 - Read the current Kuaishou / 快手 short-video hot search list.
-- Search Kuaishou works by natural-language keyword with optional `page_token` continuation; do not pass `page`.
-- Search Kuaishou users by natural-language keyword with optional `page_token` continuation before creator profile or work-list lookup; do not pass `page`.
+- Search Kuaishou works by keyword or phrase; when a work link, `photo_id`, or search result `share_url` is already available, use the corresponding detail or comment tool; supports `page_token` continuation; do not pass `page`.
+- Search Kuaishou users by keyword or phrase; when a profile link or `user_id` is already available, use the corresponding profile or creator work-list tool; supports `page_token` continuation; do not pass `page`.
 - Resolve a Kuaishou work page link, short link, or share text into structured work details.
 - Read work details when the caller already has a `photo_id`.
 - Fetch paginated first-level comments for comment analysis.
@@ -65,9 +66,10 @@ Supported workflows include:
 
 | Tool | Public purpose |
 | --- | --- |
+| `socialdatax_get_points_balance` | Query the current API Key account's SocialDataX points balance. |
 | `kuaishou_get_hot_search_list` | Fetch the current Kuaishou / 快手 short-video hot search list. |
-| `kuaishou_search_videos` | Search Kuaishou works by natural-language keyword with optional `page_token` continuation; do not pass `page`. |
-| `kuaishou_search_users` | Search Kuaishou users by natural-language keyword with optional `page_token` continuation; do not pass `page`. |
+| `kuaishou_search_videos` | Search Kuaishou works by keyword or phrase. Use this tool when the user needs works found by a search term; when a work link, `photo_id`, or search result `share_url` is already available, use the corresponding detail or comment tool. Supports `page_token` continuation; do not pass `page`. |
+| `kuaishou_search_users` | Search Kuaishou users by keyword or phrase. Use this tool when the user needs users found by a search term; when a profile link or `user_id` is already available, use the corresponding profile or creator work-list tool. Supports `page_token` continuation; do not pass `page`. |
 | `kuaishou_get_video_detail_by_photo_id` | Fetch structured work details when the caller already has a `photo_id`. |
 | `kuaishou_get_video_detail_by_url` | Resolve a Kuaishou work page link, short link, or share text into structured work details. |
 | `kuaishou_get_video_comments_by_photo_id` | Fetch paginated first-level comments when the caller already has a `photo_id`. |
@@ -79,7 +81,7 @@ Supported workflows include:
 | `kuaishou_get_user_posted_videos_by_profile_url` | Fetch a paginated list of works published by a creator from a profile link, short link, or share text that resolves directly to a non-empty `user_id`; for live/fw-user profile shares, call creator profile first and use the returned non-empty `user_id`. |
 | `kuaishou_submit_video_speech_text_by_video_url` | Submit a work video speech-to-text transcript task from a work page link, short link, or share text. 提交完成后最多短等 240 秒；未完成时继续查询同一个 `job_id` 直到终态. |
 | `kuaishou_submit_video_speech_text_by_photo_id` | Submit a work video speech-to-text transcript task from a `photo_id`. 提交完成后最多短等 240 秒；未完成时继续查询同一个 `job_id` 直到终态. |
-| `kuaishou_get_video_speech_text_job` | Check a work video speech-to-text transcript job by `job_id` without creating a new task; each call waits up to 240 seconds. If unfinished, continue querying the same `job_id` until terminal. This v1 surface returns transcript plus content context, not summary. |
+| `kuaishou_get_video_speech_text_job` | Check a work video speech-to-text transcript job using the `job_id` returned by a submit tool; this tool does not accept `photo_id` or work links and does not create a new task. Each call waits up to 240 seconds. If unfinished, continue querying the same `job_id` until terminal. This v1 surface returns transcript plus content context, not summary. |
 
 ## Quick Start
 

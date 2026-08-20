@@ -48,7 +48,8 @@ Use this checklist before syncing this listing to the public Kuaishou MCP reposi
 
 - Hosted streamable HTTP clients can connect directly to `https://mcp.socialdatax.com/kuaishou/mcp` with `Authorization: Bearer <SOCIALDATAX_API_KEY>`.
 - With a valid key, hosted MCP `initialize` succeeds.
-- With a valid key, hosted MCP `tools/list` returns the current 15 public tools.
+- With a valid key, hosted MCP `tools/list` returns the current 16 public tools.
+- `socialdatax_get_points_balance` is present in `tools/list`.
 - `kuaishou_get_hot_search_list` is present in `tools/list`; if it is missing, deploy the latest service before publishing.
 - `kuaishou_search_users` is present in `tools/list`; if it is missing, deploy the latest service before publishing.
 - `kuaishou_submit_video_speech_text_by_video_url`, `kuaishou_submit_video_speech_text_by_photo_id`, and `kuaishou_get_video_speech_text_job` are present in `tools/list`; if any are missing, deploy the latest service before publishing.
