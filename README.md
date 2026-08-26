@@ -60,7 +60,7 @@ Supported workflows include:
 - Fetch paginated replies under a first-level comment.
 - Read creator profile data from a non-empty `user_id`, profile link, short link, or share text. Live/fw-user profile shares are supported for profile data; successful results return a reusable non-empty `user_id`.
 - Fetch creator work lists from a non-empty `user_id`, or from a profile link, short link, or share text that resolves directly to a non-empty `user_id`. For live/fw-user profile shares, call creator profile first and use the returned non-empty `user_id`.
-- Submit a work video speech-to-text transcript task; submit tools 提交完成后最多短等 240 秒, and unfinished jobs should continue polling the same `job_id` until terminal.
+- Submit a work video speech-to-text transcript task; the submit call may wait up to 240 seconds, and unfinished jobs should continue polling the same `job_id` until terminal.
 
 ## Tools
 
@@ -79,9 +79,9 @@ Supported workflows include:
 | `kuaishou_get_user_info_by_profile_url` | Resolve a Kuaishou profile link, including live/fw-user profile shares, short link, or share text into creator profile data; successful results return a reusable non-empty `user_id`. |
 | `kuaishou_get_user_posted_videos_by_user_id` | Fetch a paginated list of works published by a creator when the caller already has a non-empty `user_id`. |
 | `kuaishou_get_user_posted_videos_by_profile_url` | Fetch a paginated list of works published by a creator from a profile link, short link, or share text that resolves directly to a non-empty `user_id`; for live/fw-user profile shares, call creator profile first and use the returned non-empty `user_id`. |
-| `kuaishou_submit_video_speech_text_by_video_url` | Submit a work video speech-to-text transcript task from a work page link, short link, or share text. 提交完成后最多短等 240 秒；未完成时继续查询同一个 `job_id` 直到终态. |
-| `kuaishou_submit_video_speech_text_by_photo_id` | Submit a work video speech-to-text transcript task from a `photo_id`. 提交完成后最多短等 240 秒；未完成时继续查询同一个 `job_id` 直到终态. |
-| `kuaishou_get_video_speech_text_job` | Check a work video speech-to-text transcript job using the `job_id` returned by a submit tool; this tool does not accept `photo_id` or work links and does not create a new task. Each call waits up to 240 seconds. If unfinished, continue querying the same `job_id` until terminal. This v1 surface returns transcript plus content context, not summary. |
+| `kuaishou_submit_video_speech_text_by_video_url` | Submit a work video speech-to-text transcript task from a work page link, short link, or share text. The submit call may wait up to 240 seconds; if unfinished, continue polling the same `job_id` until terminal. |
+| `kuaishou_submit_video_speech_text_by_photo_id` | Submit a work video speech-to-text transcript task from a `photo_id`. The submit call may wait up to 240 seconds; if unfinished, continue polling the same `job_id` until terminal. |
+| `kuaishou_get_video_speech_text_job` | Check a work video speech-to-text transcript job using a valid `job_id` supplied by the user, or a `job_id` returned by a submit tool; this tool does not accept `photo_id` or work links and does not create a new task. Each call waits up to 240 seconds. If unfinished, continue querying the same `job_id` until terminal. This v1 surface returns transcript plus content context, not summary. |
 
 ## Quick Start
 
