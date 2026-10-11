@@ -10,12 +10,23 @@ If you are looking for a 快手 MCP, Kuaishou MCP, or Kwai MCP for social media 
 
 The business implementation is privately hosted. This repository exposes only the public connection surface for social media content intelligence workflows.
 
+<!-- release-status:start -->
+## Recorded release status
+
+- Local metadata: `0.1.3` with 17 tracked tools. Local metadata alone does not establish publication.
+- Hosted production: `0.1.3` with 17 tools; recorded verification on `2026-10-11 19:32` (Asia/Shanghai).
+- Official MCP Registry: `0.1.3` (`active`); recorded verification on `2026-10-11 19:32` (Asia/Shanghai).
+- Registry evidence: [version-specific Registry record](https://registry.modelcontextprotocol.io/v0.1/servers/com.52choujiang%2Fkuaishou-insights/versions/0.1.3).
+- These are recorded observations, not a fresh live check. Public GitHub, npm, and other distribution channels require their own verification.
+<!-- release-status:end -->
+
 ## Search Aliases
 
 Common search phrases for this MCP service:
 
 - `快手 MCP`
 - `快手 热榜 MCP`
+- `快手 搜索建议 MCP`
 - `快手 数据 MCP`
 - `快手 作品 MCP`
 - `快手 评论 MCP`
@@ -38,7 +49,6 @@ Common search phrases for this MCP service:
 - Website and API Key access: <https://socialdatax.com/ai?from=github>
 - Registry name: `com.52choujiang/kuaishou-insights`
 - Future registry name: `com.socialdatax/kuaishou-insights`
-- Current public capability version: `0.1.2`
 
 ## Platform MCP
 
@@ -50,8 +60,9 @@ This MCP service is designed for social media content intelligence workflows. It
 
 Supported workflows include:
 
-- Query the current API Key account's SocialDataX points balance.
+- Query the current API Key account's SocialDataX points balance / 积分余额、剩余积分或点数.
 - Read the current Kuaishou / 快手 short-video hot search list.
+- Get Kuaishou / 快手 search suggestions for a keyword from the normal search box; this is not a video/work or user search.
 - Search Kuaishou works by keyword or phrase; when a work link, `photo_id`, or search result `share_url` is already available, use the corresponding detail or comment tool; supports `page_token` continuation; do not pass `page`.
 - Search Kuaishou users by keyword or phrase; when a profile link or `user_id` is already available, use the corresponding profile or creator work-list tool; supports `page_token` continuation; do not pass `page`.
 - Resolve a Kuaishou work page link, short link, or share text into structured work details.
@@ -66,12 +77,13 @@ Supported workflows include:
 
 | Tool | Public purpose |
 | --- | --- |
-| `socialdatax_get_points_balance` | Query the current API Key account's SocialDataX points balance. |
+| `socialdatax_get_points_balance` | Query the current API Key account's SocialDataX points balance / 积分余额、剩余积分或点数. |
 | `kuaishou_get_hot_search_list` | Fetch the current Kuaishou / 快手 short-video hot search list. |
+| `kuaishou_search_suggestions` | Get Kuaishou / 快手 search suggestions for a keyword from the normal search box; not for video/work or user search. |
 | `kuaishou_search_videos` | Search Kuaishou works by keyword or phrase. Use this tool when the user needs works found by a search term; when a work link, `photo_id`, or search result `share_url` is already available, use the corresponding detail or comment tool. Supports `page_token` continuation; do not pass `page`. |
 | `kuaishou_search_users` | Search Kuaishou users by keyword or phrase. Use this tool when the user needs users found by a search term; when a profile link or `user_id` is already available, use the corresponding profile or creator work-list tool. Supports `page_token` continuation; do not pass `page`. |
-| `kuaishou_get_video_detail_by_photo_id` | Fetch structured work details when the caller already has a `photo_id`. |
-| `kuaishou_get_video_detail_by_url` | Resolve a Kuaishou work page link, short link, or share text into structured work details. |
+| `kuaishou_get_video_detail_by_photo_id` | Fetch structured video or image/gallery work details when the caller already has a `photo_id`. |
+| `kuaishou_get_video_detail_by_url` | Resolve a Kuaishou work page link, short link, or share text into structured video or image/gallery work details. |
 | `kuaishou_get_video_comments_by_photo_id` | Fetch paginated first-level comments when the caller already has a `photo_id`. |
 | `kuaishou_get_video_comments_by_url` | Fetch paginated first-level comments directly from a Kuaishou work page link, short link, or share text. |
 | `kuaishou_get_video_comment_replies_by_comment_id` | Fetch paginated replies under a first-level comment by `photo_id` and `comment_id`. |

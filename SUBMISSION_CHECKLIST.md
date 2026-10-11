@@ -2,6 +2,16 @@
 
 Use this checklist before syncing this listing to the public Kuaishou MCP repository, submitting it to MCP directories, or updating a directory entry.
 
+<!-- release-status:start -->
+## Recorded release status
+
+- Local metadata: `0.1.3` with 17 tracked tools. Local metadata alone does not establish publication.
+- Hosted production: `0.1.3` with 17 tools; recorded verification on `2026-10-11 19:32` (Asia/Shanghai).
+- Official MCP Registry: `0.1.3` (`active`); recorded verification on `2026-10-11 19:32` (Asia/Shanghai).
+- Registry evidence: [version-specific Registry record](https://registry.modelcontextprotocol.io/v0.1/servers/com.52choujiang%2Fkuaishou-insights/versions/0.1.3).
+- These are recorded observations, not a fresh live check. Public GitHub, npm, and other distribution channels require their own verification.
+<!-- release-status:end -->
+
 ## Public Repository
 
 - Primary repository name: `kuaishou-mcp`
@@ -48,9 +58,10 @@ Use this checklist before syncing this listing to the public Kuaishou MCP reposi
 
 - Hosted streamable HTTP clients can connect directly to `https://mcp.socialdatax.com/kuaishou/mcp` with `Authorization: Bearer <SOCIALDATAX_API_KEY>`.
 - With a valid key, hosted MCP `initialize` succeeds.
-- With a valid key, hosted MCP `tools/list` returns the current 16 public tools.
+- Verify hosted MCP `tools/list` matches the public tool allowlist in `server-card.json`.
 - `socialdatax_get_points_balance` is present in `tools/list`.
 - `kuaishou_get_hot_search_list` is present in `tools/list`; if it is missing, deploy the latest service before publishing.
+- `kuaishou_search_suggestions` is present in `tools/list`; if it is missing, deploy the latest service before publishing.
 - `kuaishou_search_users` is present in `tools/list`; if it is missing, deploy the latest service before publishing.
 - `kuaishou_submit_video_speech_text_by_video_url`, `kuaishou_submit_video_speech_text_by_photo_id`, and `kuaishou_get_video_speech_text_job` are present in `tools/list`; if any are missing, deploy the latest service before publishing.
 - `examples/codex_config.toml` uses remote HTTP URL and `bearer_token_env_var`, not `mcp-remote`.
