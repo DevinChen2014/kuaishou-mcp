@@ -1,5 +1,7 @@
 # 快手 MCP | Kuaishou MCP | Kwai MCP
 
+LobeHub 用户请使用 [LobeHub setup / 接入说明](LOBEHUB.md)，包含专属官网入口、认证和来源配置。
+
 This public repository provides public connection docs and MCP metadata for a hosted 快手 MCP / Kuaishou MCP / Kwai MCP service by SocialDataX.
 
 If you are looking for a 快手 MCP, Kuaishou MCP, or Kwai MCP for social media research workflows, this repository includes:
